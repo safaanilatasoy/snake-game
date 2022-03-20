@@ -1,2 +1,2 @@
 # snake-game
- Snake game with python 
+ Snake game with Javascript 
