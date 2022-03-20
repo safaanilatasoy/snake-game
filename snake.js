@@ -58,9 +58,9 @@ class Apple{
     }
 }
 
-var canvas = document.getElementById('canvas');
-var snake = new Snake();
-var apple = new Apple();
+var canvas = document.getElementById("canvas")
+var snake = new Snake(20, 20, 20)
+var apple = new Apple()
 var canvasContext = canvas.getContext('2d');
 window.onload = () =>{
     gameLoop();
@@ -76,13 +76,25 @@ function show(){
 }
 
 function update(){
+    canvasContext.clearRect(0,0, canvas.width, canvas.height)
+    console.log("update")
     snake.move()
+    eatApple()
 
 }
 
+function eatApple(){
+    if(snake.tail[snake.tail.length-1].x == apple.x &&
+        snake.tail[snake.tail.length-1].y == apple.y){
+            snake.tail[snake.tail.length] = {x:apple.x, y:apple.y}
+            apple = new Apple();
+        }
+}
+
+
 function draw(){
    createRect(0,0,canvas.width, canvas.height, "black")
-   create(0,0, canvas.width, canvas.height)
+   createRect(0,0, canvas.width, canvas.height)
    for (var i=0; i<snake.tail.length; i++){
        createRect(snake.tail[i].x + 2.5, snake.tail[i].y + 2.5,
         snake.size - 5, snake.size -5, 'white')
@@ -105,7 +117,7 @@ function createRect(x,y,width,height,color){
             snake.rotateY =0;
          } else if(event.keyCode == 38 && snake.rotateY != 1){
             snake.rotateX = 0
-            snake.rotateY =1;
+            snake.rotateY =-1;
          } else if(event.keyCode == 39 && snake.rotateX != -1){
             snake.rotateX = 1
             snake.rotateY =0;
